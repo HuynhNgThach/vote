@@ -1,0 +1,22 @@
+<div class="card bg-neutral shadow-lg">
+	<div class="card-body gap-y-5">
+		<div class="font-bold text-xl">{{ vote?.topic }}</div>
+		<div>
+			<ul class="space-y-4">
+				@for (item of options; track $index) {
+				<div
+					(click)="updateVote($index)"
+					class="border border-dashed h-9 rounded-xl flex items-center cursor-pointer overflow-hidden relative"
+				>
+					<p class="p-2 select-none">
+						{{ item.option_text }}
+					</p>
+					<div class="bg-primary opacity-30 w-[40%] h-[100%] absolute"></div>
+					<p class="absolute right-1 text-[10px]">{{ item.voteCount }}</p>
+				</div>
+
+				}
+			</ul>
+		</div>
+	</div>
+</div>

@@ -1,96 +1,109 @@
 <div class="dashboard">
-  <div class="dashboard__header text-right p-10">
-    <button class="btn btn-primary btn-outline" (click)="toggleDialog()">
-      Add new
-    </button>
-    <div class="dashboard-list"></div>
-  </div>
+	<div class="dashboard__header p-10">
+		<div class="flex gap-2 justify-end">
+			<button class="btn btn-primary btn-outline" (click)="toggleDialog()">
+				Add new
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="icon icon-tabler icons-tabler-outline icon-tabler-plus"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M12 5l0 14" />
+					<path d="M5 12l14 0" />
+				</svg>
+			</button>
+			<button class="btn btn-link no-underline" (click)="handleSignout()">Sign out</button>
+		</div>
+		<div class="dashboard-list grid grid-cols-5 gap-5 mt-10">
+			@for(vote of votes; track vote) {
+			<app-vote-card [vote]="vote" />
+			}
+		</div>
+	</div>
 </div>
-<dialog
-  id="createVoteDialog"
-  class="modal w-500"
-  [class.modal-open]="showDialog"
->
-  <div class="modal-box">
-    <div class="text-center">Create new vote</div>
-    <form [formGroup]="voteForm" (ngSubmit)="handleCreateVote()">
-      <button
-        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-        (click)="toggleDialog()"
-      >
-        ✕
-      </button>
-      <label class="form-control space-y-4">
-        <div class="label">
-          <span>Your topic</span>
-        </div>
-        <textarea
-          class="textarea textarea-bordered h-24"
-          placeholder="Enter your topic"
-          formControlName="topic"
-        ></textarea>
-      </label>
-      <div class="options space-y-4 mt-5" formArrayName="options">
-        <div>Options</div>
-        @for(option of options.controls; let i = $index; track option) {
-        <div class="relative">
-          <input
-            type="text"
-            placeholder="Option"
-            [formControlName]="i"
-            class="input input-bordered w-full"
-          />
-          @if (i >=2) {
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="cursor-pointer icon icon-tabler icons-tabler-outline icon-tabler-x absolute right-2 top-[50%] translate-y-[-50%]"
-            (click)="removeItem(i)"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M18 6l-12 12" />
-            <path d="M6 6l12 12" />
-          </svg>
-          }
-        </div>
-        }
+<dialog id="createVoteDialog" class="modal w-500" [class.modal-open]="showDialog">
+	<div class="modal-box">
+		<div class="text-center">Create new vote</div>
+		<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" (click)="toggleDialog()">✕</button>
 
-        <div
-          class="flex gap-2 items-center cursor-pointer text-primary justify-end"
-          (click)="addOption()"
-        >
-          Add more
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon icon-tabler icons-tabler-outline icon-tabler-plus"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 5l0 14" />
-            <path d="M5 12l14 0" />
-          </svg>
-        </div>
-      </div>
-      <button
-        class="btn btn-active btn-primary w-full mt-10 text-white text-lg"
-        type="submit"
-      >
-        Create
-      </button>
-    </form>
-  </div>
+		<form [formGroup]="voteForm" (ngSubmit)="handleCreateVote()">
+			<label class="form-control space-y-4">
+				<div class="label">
+					<span>Your topic</span>
+				</div>
+				<textarea
+					class="textarea textarea-bordered h-24"
+					placeholder="Enter your topic"
+					formControlName="topic"
+				></textarea>
+			</label>
+			<div class="options space-y-4 mt-5" formArrayName="options">
+				<div>Options</div>
+				@for(option of options.controls; let i = $index; track option) {
+				<div class="relative">
+					<input
+						type="text"
+						placeholder="Option"
+						[formControlName]="i"
+						class="input input-bordered w-full"
+					/>
+					@if (i >=2) {
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="cursor-pointer icon icon-tabler icons-tabler-outline icon-tabler-x absolute right-2 top-[50%] translate-y-[-50%]"
+						(click)="removeItem(i)"
+					>
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path d="M18 6l-12 12" />
+						<path d="M6 6l12 12" />
+					</svg>
+					}
+				</div>
+				}
+
+				<div class="flex gap-2 items-center cursor-pointer text-primary justify-end" (click)="addOption()">
+					Add more
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="icon icon-tabler icons-tabler-outline icon-tabler-plus"
+					>
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path d="M12 5l0 14" />
+						<path d="M5 12l14 0" />
+					</svg>
+				</div>
+			</div>
+			<button
+				class="btn btn-active btn-primary w-full mt-10 text-white text-lg"
+				type="submit"
+				[disabled]="loading"
+			>
+				Create
+			</button>
+		</form>
+	</div>
 </dialog>

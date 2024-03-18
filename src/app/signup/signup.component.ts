@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SupabaseService } from '../services/superbase.service';
 import { CardComponent } from '../card/card.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -19,15 +20,16 @@ export class SignupComponent {
 
 
   constructor(
-    private supabase: SupabaseService
+    private supabase: SupabaseService,
+    private route: Router
   ) {
 
   }
 
-  handleSignup() {
+  async handleSignup() {
     try {
       this.loading = true
-      this.supabase.signUpNewUser({
+      await this.supabase.signUpNewUser({
         email: this.signupForm.value.emailFormControl!,
         password: this.signupForm.value.passwordFromControl!
       })
@@ -36,5 +38,8 @@ export class SignupComponent {
     } finally {
       this.loading = false
     }
+  }
+  handleNavigateSignin() {
+    this.route.navigate(['/signin'])
   }
 }

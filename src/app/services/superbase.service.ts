@@ -9,12 +9,25 @@ import {
 } from '@supabase/supabase-js'
 import { environment } from '../../../src/environments/environment'
 import { Router } from '@angular/router'
+import { Database } from '../../types/supabase'
 
 export interface IProfile {
     id?: string
     username: string
     website: string
     avatar_url: string
+}
+
+export interface IVote {
+    topic?: string,
+    owner?: string,
+    options?: Array<string | null>
+}
+export interface IVoteDispl {
+    topic?: string,
+    owner?: string,
+    options?: Array<{ option_text: string, voteCount: number }>
+
 }
 export interface IUserCredential {
     email: string,
@@ -29,7 +42,7 @@ export class SupabaseService {
     _session: AuthSession | null = null
 
     constructor(private router: Router) {
-        this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
+        this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseKey)
     }
 
     get session() {
@@ -55,8 +68,9 @@ export class SupabaseService {
         return this.supabase.auth.signInWithOtp({ email })
     }
 
-    signOut() {
-        return this.supabase.auth.signOut()
+    async signOut() {
+        await this.supabase.auth.signOut()
+        this.router.navigate(['/signin'])
     }
 
     updateProfile(profile: IProfile) {
@@ -79,7 +93,7 @@ export class SupabaseService {
         const { data, error } = await this.supabase.auth.signUp({
             ...userCredential,
             options: {
-                emailRedirectTo: 'https://localhost:4200/signin'
+                emailRedirectTo: 'http://localhost:4200/signin'
             }
         })
         if (error) {
@@ -97,5 +111,61 @@ export class SupabaseService {
     }
     async isAuthenticated() {
         return !!(await this.supabase.auth.getSession()).data.session
+    }
+    async createNewVote(payload: IVote) {
+        try {
+            const user = this.session?.user
+            console.log("user", user)
+            if (!user) {
+                return
+            }
+            const { data: topic, error } = await this.supabase.from('topics').insert({
+                topic: payload.topic,
+                owner_id: user.id
+            }).select('id').single()
+            console.log(error)
+            if (topic && payload.options) {
+                await this.supabase.from('options').insert(
+                    payload.options.map(i => ({ topic_id: topic.id, option_text: i }))
+                )
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async getVotes() {
+        try {
+
+            const { data, error } = await this.supabase.from('topics').select(`
+                id,
+                topic,
+                options (
+                    id,
+                    option_text
+                    
+                )
+
+            `)
+            console.log(data)
+            if (error) {
+                return undefined
+            }
+            return data
+        } catch (error) {
+            console.log(error)
+        }
+        return undefined
+    }
+    subscribeToNewTopic() {
+        this.supabase.channel('custom-all-channel')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'topics' },
+                (payload) => {
+                    console.log('Change received!', payload)
+                }
+            )
+            .subscribe()
     }
 }

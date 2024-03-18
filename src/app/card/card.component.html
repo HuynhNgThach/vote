@@ -1,11 +1,11 @@
 <div class="signin flex items-center justify-center h-full">
-  <div class="card border shadow-lg w-[500px] overflow-hidden">
-    @if (loading) {
-    <progress class="progress w-[100%]"></progress>
-    }
-    <div class="card-body gap-y-5">
-      <div class="card-title justify-center mb-10 text-white">{{ title }}</div>
-      <ng-content></ng-content>
-    </div>
-  </div>
+	<div class="card border shadow-lg w-[600px] overflow-hidden border-[]">
+		@if (loading) {
+		<progress class="progress w-[100%]"></progress>
+		}
+		<div class="card-body gap-y-5">
+			<div class="card-title justify-center mb-10 text-white">{{ title }}</div>
+			<ng-content></ng-content>
+		</div>
+	</div>
 </div>

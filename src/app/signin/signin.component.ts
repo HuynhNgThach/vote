@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SupabaseService } from '../services/superbase.service';
 import { CardComponent } from '../card/card.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SigninComponent {
 
   constructor(
     private supabase: SupabaseService,
+    private router: Router
   ) {
     this.session = supabase.session
   }
@@ -33,11 +35,16 @@ export class SigninComponent {
         email: this.signinForm.value.emailFormControl!,
         password: this.signinForm.value.passwordFromControl!
       })
+      this.router.navigate(['/dashboard'])
     } catch (error) {
       if (error instanceof Error) {
+        console.log("handleSignin", error.message)
       }
     } finally {
       this.loading = false
     }
+  }
+  handleNavigateSignup() {
+    this.router.navigate(['/signup'])
   }
 }

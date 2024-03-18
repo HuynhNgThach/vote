@@ -5,12 +5,18 @@ import { SupabaseService } from './services/superbase.service';
 export const authGuard: CanActivateFn = async (route, state) => {
   const supabase = inject(SupabaseService)
   const router = inject(Router)
-  console.log("in guard", supabase.session)
-  const isAuthenticated = await supabase.isAuthenticated()
-  console.log("route", route.url.join() === 'dashboard')
-  if (!isAuthenticated) {
-    return router.navigate(['/signin'])
 
+  const isAuthenticated = await supabase.isAuthenticated()
+
+  console.log("url", route, state)
+  if (isAuthenticated && (['/signin', '/signup'].includes(state.url))) {
+    return router.navigate(['/dashboard'])
+  }
+  if (!isAuthenticated) {
+    if (['/signin', '/signup'].includes(state.url)) {
+      return true
+    }
+    return router.navigate(['/signin'])
   }
   return true;
 };
