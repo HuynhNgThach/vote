@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { IVote, IVoteDispl, SupabaseService } from '../services/superbase.service';
-import { VoteCardComponent } from '../vote-card/vote-card.component';
+import { IVote, IVoteDispl, SupabaseService } from '@share/services';
+import { VoteCardComponent } from '@share/components';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +25,6 @@ export class DashboardComponent implements OnInit {
     return this.voteForm.get('options') as FormArray
   }
   constructor(private supabase: SupabaseService) {
-    supabase.subscribeToNewTopic()
   }
   async ngOnInit(): Promise<void> {
     console.log("from init", await this.supabase.getVotes())

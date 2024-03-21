@@ -5,14 +5,17 @@
 			<ul class="space-y-4">
 				@for (item of options; track $index) {
 				<div
-					(click)="updateVote($index)"
+					(click)="addVote($index)"
 					class="border border-dashed h-9 rounded-xl flex items-center cursor-pointer overflow-hidden relative"
 				>
 					<p class="p-2 select-none">
 						{{ item.option_text }}
 					</p>
-					<div class="bg-primary opacity-30 w-[40%] h-[100%] absolute"></div>
-					<p class="absolute right-1 text-[10px]">{{ item.voteCount }}</p>
+					<div
+						class="bg-primary opacity-30 h-[100%] absolute transition-all"
+						[style.width]="percentage(item.votes.length)"
+					></div>
+					<!-- <p class="absolute right-1 text-[10px]">{{ percentage(item.votes.length) }}</p> -->
 				</div>
 
 				}

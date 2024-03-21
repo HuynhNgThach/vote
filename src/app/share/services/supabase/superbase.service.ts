@@ -7,9 +7,9 @@ import {
     SupabaseClient,
     User,
 } from '@supabase/supabase-js'
-import { environment } from '../../../src/environments/environment'
+import { environment } from '../../../../environments/environment'
 import { Router } from '@angular/router'
-import { Database } from '../../types/supabase'
+import { Database } from '../../../../types/supabase'
 
 export interface IProfile {
     id?: string
@@ -25,8 +25,8 @@ export interface IVote {
 }
 export interface IVoteDispl {
     topic?: string,
-    owner?: string,
-    options?: Array<{ option_text: string, voteCount: number }>
+    // owner?: string,
+    options?: Array<{ option_text: string, id: string, votes: Array<string> }>
 
 }
 export interface IUserCredential {
@@ -70,7 +70,7 @@ export class SupabaseService {
 
     async signOut() {
         await this.supabase.auth.signOut()
-        this.router.navigate(['/signin'])
+        this.router.navigate(['/auth/signin'])
     }
 
     updateProfile(profile: IProfile) {
@@ -93,7 +93,7 @@ export class SupabaseService {
         const { data, error } = await this.supabase.auth.signUp({
             ...userCredential,
             options: {
-                emailRedirectTo: 'http://localhost:4200/signin'
+                emailRedirectTo: 'http://localhost:4200/auth/signin'
             }
         })
         if (error) {
@@ -105,6 +105,7 @@ export class SupabaseService {
             email: userCredential.email,
             password: userCredential.password
         })
+        console.log(error)
         if (error) {
             throw error
         }
@@ -141,13 +142,17 @@ export class SupabaseService {
                 id,
                 topic,
                 options (
+                    option_text,
                     id,
-                    option_text
-                    
+                    votes (
+                        user_id
+                    )
                 )
 
             `)
-            console.log(data)
+            console.log(data, error)
+
+
             if (error) {
                 return undefined
             }
@@ -157,15 +162,21 @@ export class SupabaseService {
         }
         return undefined
     }
-    subscribeToNewTopic() {
+    subscribeToVotes() {
         this.supabase.channel('custom-all-channel')
             .on(
                 'postgres_changes',
-                { event: '*', schema: 'public', table: 'topics' },
+                { event: '*', schema: 'public', table: 'votes' },
                 (payload) => {
                     console.log('Change received!', payload)
                 }
             )
             .subscribe()
+    }
+    async updateVote(optionId: string, userId: string) {
+        const { data, error } = await this.supabase.from('votes').insert({
+            user_id: userId,
+            option_id: optionId
+        })
     }
 }

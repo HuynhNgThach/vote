@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SupabaseService } from '../services/superbase.service';
-import { CardComponent } from '../card/card.component';
+import { SupabaseService } from '../../../share/services/supabase/superbase.service';
+import { CardComponent } from '../../../share/components/card/card.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -40,6 +40,6 @@ export class SignupComponent {
     }
   }
   handleNavigateSignin() {
-    this.route.navigate(['/signin'])
+    this.route.navigate(['/auth/signin'])
   }
 }

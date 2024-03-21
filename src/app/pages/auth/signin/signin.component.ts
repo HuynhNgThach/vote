@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SupabaseService } from '../services/superbase.service';
-import { CardComponent } from '../card/card.component';
+import { SupabaseService } from '@share/services';
+import { CardComponent } from '@share/components';
 import { Router } from '@angular/router';
 
 
@@ -29,13 +29,12 @@ export class SigninComponent {
 
   async handleSignin() {
     try {
-      console.log("handle signin")
       this.loading = true
       await this.supabase.signInUser({
         email: this.signinForm.value.emailFormControl!,
         password: this.signinForm.value.passwordFromControl!
       })
-      this.router.navigate(['/dashboard'])
+      this.router.navigate(['/'])
     } catch (error) {
       if (error instanceof Error) {
         console.log("handleSignin", error.message)
@@ -45,6 +44,6 @@ export class SigninComponent {
     }
   }
   handleNavigateSignup() {
-    this.router.navigate(['/signup'])
+    this.router.navigate(['/auth/signup'])
   }
 }

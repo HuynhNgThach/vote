@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { SupabaseService } from './services/superbase.service';
+import { SupabaseService } from '@share/services';
 
 export const authGuard: CanActivateFn = async (route, state) => {
   const supabase = inject(SupabaseService)
@@ -9,14 +9,14 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const isAuthenticated = await supabase.isAuthenticated()
 
   console.log("url", route, state)
-  if (isAuthenticated && (['/signin', '/signup'].includes(state.url))) {
-    return router.navigate(['/dashboard'])
+  if (isAuthenticated && (['/auth/signin', '/auth/signup'].includes(state.url))) {
+    return router.navigate(['/'])
   }
   if (!isAuthenticated) {
-    if (['/signin', '/signup'].includes(state.url)) {
+    if (['/auth/signin', '/auth/signup'].includes(state.url)) {
       return true
     }
-    return router.navigate(['/signin'])
+    return router.navigate(['/auth/signin'])
   }
   return true;
 };

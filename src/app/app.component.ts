@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SupabaseService } from './services/superbase.service';
-import { AccountComponent } from './account/account.component';
+import { SupabaseService } from './share/services/supabase/superbase.service';
+import { AccountComponent } from './share/components/account/account.component';
+import { ToastComponent } from '@share/components/toast/toast.component';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, AccountComponent],
+  imports: [RouterOutlet, AccountComponent, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

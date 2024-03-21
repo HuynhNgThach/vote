@@ -1,21 +1,18 @@
 import { Routes } from '@angular/router';
-import { SigninComponent } from './signin/signin.component';
-import { SignupComponent } from './signup/signup.component';
-import { authGuard } from './auth.guard';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AppComponent } from './app.component';
+import { authGuard } from '@share/guards';
 
 export const routes: Routes = [
     {
         path: '',
-        component: AppComponent,
-        children: [
-            { path: 'dashboard', component: DashboardComponent },
-            { path: 'signin', component: SigninComponent },
-            { path: 'signup', component: SignupComponent },
-        ],
-        canActivate: [authGuard]
+        loadChildren: async () => (await import('@pages/dashboard')).routes,
+        canActivate: [authGuard],
     },
-
-
+    {
+        path: 'auth',
+        loadChildren: async () => (await import('@pages/auth')).routes,
+    },
+    {
+        path: '**',
+        loadComponent: async () => (await import('@pages/not-found/not-found.component')).NotFoundComponent,
+    },
 ];

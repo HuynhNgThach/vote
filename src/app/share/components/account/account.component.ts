@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IProfile, SupabaseService } from '../services/superbase.service';
+import { IProfile, SupabaseService } from '../../services/supabase/superbase.service';
 import { AuthSession } from '@supabase/supabase-js';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
