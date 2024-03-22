@@ -1,21 +1,27 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupabaseService } from '../../../share/services/supabase/superbase.service';
 import { CardComponent } from '../../../share/components/card/card.component';
 import { Router } from '@angular/router';
+import { InputComponent } from '@share/components/input/input.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CardComponent],
+  imports: [ReactiveFormsModule, CardComponent, InputComponent, CommonModule],
   templateUrl: './signup.component.html',
 })
 export class SignupComponent {
   loading = false
 
   signupForm = new FormGroup({
-    emailFormControl: new FormControl(''),
-    passwordFromControl: new FormControl('')
+    emailFormControl: new FormControl('', {
+      validators: [Validators.required, Validators.email], updateOn: 'change'
+    }),
+    passwordFromControl: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(8)], updateOn: 'change'
+    })
   })
 
 

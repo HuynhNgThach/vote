@@ -10,6 +10,7 @@ export const routes: Routes = [
     {
         path: 'auth',
         loadChildren: async () => (await import('@pages/auth')).routes,
+        canActivate: [authGuard],
     },
     {
         path: '**',

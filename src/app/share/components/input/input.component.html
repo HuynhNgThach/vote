@@ -1,0 +1,14 @@
+<div class="flex flex-col gap-2">
+	<span class="label-text text-slate-300 text-lg">{{ label }}</span>
+	<label class="input input-bordered flex items-center gap-2">
+		<input
+			type="text"
+			class="grow placeholder:text-xs outline-red-500"
+			[placeholder]="placeholder"
+			[formControl]="control"
+		/>
+	</label>
+	<div class="text-red-500">
+		<ng-content select="[error]" class="error"> </ng-content>
+	</div>
+</div>

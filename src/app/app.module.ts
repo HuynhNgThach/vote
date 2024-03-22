@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastComponent } from '@share/components/toast/toast.component';
+import { AppComponent } from './app.component';
 @NgModule({
     imports: [
         ReactiveFormsModule,
-        ToastComponent
+        ToastComponent,
     ],
-    // declarations: [ToastComponent],
-    // exports: [ToastComponent],
+    declarations: [AppComponent],
+    bootstrap: [AppComponent]
+
 })
 export class AppModule { }
