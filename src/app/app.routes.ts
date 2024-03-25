@@ -13,6 +13,10 @@ export const routes: Routes = [
         canActivate: [authGuard],
     },
     {
+        path: 'learn',
+        loadChildren: async () => (await import('@pages/learn')).routes
+    },
+    {
         path: '**',
         loadComponent: async () => (await import('@pages/not-found/not-found.component')).NotFoundComponent,
     },

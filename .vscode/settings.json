@@ -3,5 +3,6 @@
     "cSpell.words": [
         "daisyui",
         "superbase"
-    ]
+    ],
+    "editor.tabSize": 2
 }
