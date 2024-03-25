@@ -1,0 +1,85 @@
+<div class="grid grid-cols-2 gap-5">
+	<div class="control space-y-4">
+		<div class="space-y-2">
+			<div class="text-sm text-white">Vertical offset {{ shadow.verticalOffset }}px</div>
+			<input
+				type="range"
+				min="-35"
+				max="35"
+				[value]="shadow.verticalOffset"
+				class="range range-primary"
+				(change)="handleInputChange('y', $event)"
+			/>
+		</div>
+		<div class="space-y-2">
+			<div class="text-sm text-white">Horizontal offset {{ shadow.horizontalOffset }}px</div>
+			<input
+				type="range"
+				min="-35"
+				max="35"
+				[value]="shadow.horizontalOffset"
+				class="range range-primary"
+				(change)="handleInputChange('x', $event)"
+			/>
+		</div>
+		<div class="space-y-2">
+			<div class="text-sm text-white">Blur {{ shadow.blur }}px</div>
+			<input
+				type="range"
+				min="0"
+				max="35"
+				[value]="shadow.blur"
+				class="range range-primary"
+				(change)="handleInputChange('blur', $event)"
+			/>
+		</div>
+		<div class="space-y-2">
+			<div class="text-sm text-white">Spread {{ shadow.spread }}px</div>
+			<input
+				type="range"
+				min="-35"
+				max="35"
+				[value]="shadow.spread"
+				class="range range-primary"
+				(change)="handleInputChange('spread', $event)"
+			/>
+		</div>
+		<div class="space-y-2">
+			<div class="text-sm text-white">Radius {{ shadow.shapeRadius }}%</div>
+			<input
+				type="range"
+				min="0"
+				max="100"
+				[value]="shadow.shapeRadius"
+				class="range range-primary"
+				(change)="handleInputChange('radius', $event)"
+			/>
+		</div>
+	</div>
+	<div class="p-10">
+		<div class="space-y-5">
+			<div class="border bg-white rounded-md cursor-pointer px-4 py-2 space-y-2">
+				<div class="text-sm text-slate-400 select-none">Background color</div>
+				<div class="flex gap-2 items-center">
+					<input type="color" [value]="shadow.bgColor" (change)="handleChangeColor('bg', $event)" />
+					<div class="text-sm select-none">{{ shadow.bgColor }}</div>
+				</div>
+			</div>
+			<div class="border bg-white rounded-md cursor-pointer px-4 py-2 space-y-2">
+				<div class="text-sm text-slate-400 select-none">Shadow color</div>
+				<div class="flex gap-2 items-center">
+					<input
+						type="color"
+						[value]="shadow.shadowColor"
+						(change)="handleChangeColor('shadow', $event)"
+					/>
+					<div class="text-sm">{{ shadow.shadowColor }}</div>
+				</div>
+			</div>
+			<div class="border bg-white rounded-md cursor-pointer px-4 py-2 space-y-2" (click)="copyShadow()">
+				<div class="text-sm text-slate-400 select-none">Css code</div>
+				<div class="flex gap-2 items-center text-slate-700 select-none">{{ shadowString }}</div>
+			</div>
+		</div>
+	</div>
+</div>

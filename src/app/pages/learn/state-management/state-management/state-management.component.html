@@ -1,0 +1,15 @@
+<div class="p-5">
+	<h1 class="text-2xl font-semibold leading-2 text-center text-white mb-8">State management topic</h1>
+	<div>
+		<div [ngStyle]="{ backgroundColor: bgColor }" class="p-5 border-dashed rounded-md">
+			<app-local-state [color]="bgColor" (updateColor)="handleChangeBgColor($event)"></app-local-state>
+		</div>
+		<div class="mt-8">
+			<h1 class="text-white text-lg">State management use rxjs</h1>
+			<div class="mt-8 grid grid-cols-3 gap-5">
+				<app-shadow-control class="col-span-2" />
+				<app-shadow-preview />
+			</div>
+		</div>
+	</div>
+</div>
