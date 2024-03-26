@@ -19,6 +19,7 @@ export class InputComponent {
   placeholder = ''
   @Input()
   hasError = false
+  @Input() type = 'text'
 
   @Output()
   valueChange = new EventEmitter<string>()

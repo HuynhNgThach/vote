@@ -2,7 +2,7 @@
 	<span class="label-text text-slate-300 text-lg">{{ label }}</span>
 	<label class="input input-bordered flex items-center gap-2">
 		<input
-			type="text"
+			[type]="type"
 			class="grow placeholder:text-xs outline-red-500"
 			[placeholder]="placeholder"
 			[formControl]="control"

@@ -1,0 +1,181 @@
+<div>
+	<h1 class="text-white py-8 text-center text-3xl">Form management page</h1>
+	<div class="grid grid-cols-2 mt-2">
+		<app-card [title]="'Singin'" [loading]="loading" class="self-start">
+			<div>
+				Demo form reactive binding, form validation:
+				<ul>
+					<li>Email: required, valid email format</li>
+					<li>Password: required, at least 8 characters</li>
+				</ul>
+			</div>
+			<form [formGroup]="signinForm" (ngSubmit)="handleSignin()">
+				<div class="flex flex-col gap-5">
+					<app-input
+						[control]="signinForm.controls.emailFormControl"
+						value=""
+						label="Email"
+						placeholder="Enter email address"
+					>
+						<div
+							*ngIf="
+								signinForm.controls.emailFormControl.invalid &&
+								(signinForm.controls.emailFormControl.dirty ||
+									signinForm.controls.emailFormControl.touched)
+							"
+							error
+						>
+							<div *ngIf="signinForm.controls.emailFormControl.hasError('required')">
+								Email is required
+							</div>
+							<div *ngIf="signinForm.controls.emailFormControl.hasError('email')">
+								Must be a valid email
+							</div>
+						</div>
+					</app-input>
+
+					<app-input
+						[control]="signinForm.controls.passwordFromControl"
+						value=""
+						type="password"
+						label="Password"
+						placeholder="Enter password"
+					>
+						<div
+							*ngIf="
+								signinForm.controls.passwordFromControl.invalid &&
+								(signinForm.controls.passwordFromControl.dirty ||
+									signinForm.controls.passwordFromControl.touched)
+							"
+							error
+						>
+							<div *ngIf="signinForm.controls.passwordFromControl.hasError('required')">
+								Password is required
+							</div>
+							<div *ngIf="signinForm.controls.passwordFromControl.hasError('minlength')">
+								Password must be at least 8 characters in length
+							</div>
+						</div>
+					</app-input>
+				</div>
+				<button
+					class="btn btn-active btn-primary text-white text-xl w-full mt-10 font-medium"
+					type="submit"
+				>
+					Login
+				</button>
+				<div class="text-center">
+					<button class="btn btn-link">Don't have account?</button>
+				</div>
+			</form>
+		</app-card>
+		<app-card [title]="'Create new Poll'">
+			<div>
+				Demo form reactive binding, dynamic form field:
+				<ul>
+					<li>Topic: required, max-length: 255</li>
+					<li>Options: dynamically add, required on the first two items</li>
+				</ul>
+			</div>
+			<div class="modal-box">
+				<div class="text-center">Create new vote</div>
+
+				<form [formGroup]="voteForm">
+					<label class="form-control space-y-4">
+						<div class="label">
+							<span>Your topic</span>
+						</div>
+						<textarea
+							class="textarea textarea-bordered h-24"
+							placeholder="Enter your topic"
+							formControlName="topic"
+						></textarea>
+						<div
+							*ngIf="
+								voteForm.controls.topic.invalid &&
+								(voteForm.controls.topic.dirty || voteForm.controls.topic.touched)
+							"
+							class="text-red-500"
+						>
+							<div *ngIf="voteForm.controls.topic.hasError('required')">Topic is required</div>
+							<div *ngIf="voteForm.controls.topic.hasError('maxlength')">
+								Topic must have 255 characters limit in length
+							</div>
+						</div>
+					</label>
+					<div class="options space-y-4 mt-5" formArrayName="options">
+						<div>Options</div>
+						@for(option of options.controls; let i = $index; track option) {
+						<div class="relative">
+							<input
+								type="text"
+								placeholder="Option"
+								[formControlName]="i"
+								class="input input-bordered w-full"
+							/>
+							<div
+								*ngIf="option.invalid && (option.dirty || option.touched)"
+								class="text-red-500 mt-2"
+							>
+								<div *ngIf="option.hasError('required')">Option is required</div>
+								<div *ngIf="option.hasError('maxlength')">
+									Option must have 100 characters limit in length
+								</div>
+							</div>
+
+							@if (i >=2) {
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="cursor-pointer icon icon-tabler icons-tabler-outline icon-tabler-x absolute right-2 top-[50%] translate-y-[-50%]"
+								(click)="removeItem(i)"
+							>
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M18 6l-12 12" />
+								<path d="M6 6l12 12" />
+							</svg>
+							}
+						</div>
+						}
+
+						<div class="flex text-primary justify-end">
+							<div class="flex items-center cursor-pointer gap-2 select-none" (click)="addOption()">
+								Add more
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="24"
+									height="24"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="icon icon-tabler icons-tabler-outline icon-tabler-plus"
+								>
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path d="M12 5l0 14" />
+									<path d="M5 12l14 0" />
+								</svg>
+							</div>
+						</div>
+					</div>
+					<button
+						class="btn btn-active btn-primary w-full mt-10 text-white text-lg"
+						type="submit"
+						[disabled]="loading"
+					>
+						Create
+					</button>
+				</form>
+			</div>
+		</app-card>
+	</div>
+</div>
