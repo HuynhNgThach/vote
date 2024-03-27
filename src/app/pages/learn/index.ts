@@ -10,5 +10,10 @@ export const routes: Routes = [
     path: 'form-management',
     title: 'form management',
     loadComponent: async () => (await import('./form-management/form-management.component')).FormManagementComponent
+  },
+  {
+    path: 'template',
+    title: 'Template',
+    loadComponent: async () => (await import('./template/template.component')).TemplateComponent
   }
 ]

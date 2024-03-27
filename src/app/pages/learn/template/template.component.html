@@ -1,0 +1,92 @@
+@if (selectedMovie) {
+<div
+	class="min-w-full min-h-screen bg-black overflow-hidden relative"
+	[style]="{
+		backgroundImage: 'url(https://image.tmdb.org/t/p/original' + selectedMovie.backdrop_path + ')',
+		backgroundPosition: 'center',
+		backgroundSize: 'cover',
+		backgroundRepeat: 'no-repeat'
+	}"
+>
+	<div class="h-full w-[30%] bg-black opacity-85 absolute p-10">
+		<div class="w-full mt-10">
+			<div class="text-white text-6xl font-semibold mb-5">{{ selectedMovie.title }}</div>
+			<div>{{ shortTilte }}</div>
+		</div>
+		<div class="mt-5 text-right">
+			<button
+				class="w-1/2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-xl px-5 py-3 text-center transition"
+			>
+				Watch now
+			</button>
+		</div>
+		<div class="mt-5">
+			<div class="text-white text-2xl">Global Chat</div>
+			<div class="space-y-3 my-4">
+				@for (reviewer of reviewers; track $index) {
+				<div class="flex gap-2">
+					<div class="w-[40px] h-[40px] rounded-full overflow-hidden">
+						<img
+							class="rounded-full w-full h-full object-cover"
+							[src]="reviewer.avaUrl"
+							alt="reviewer ava"
+						/>
+					</div>
+					<div>
+						<p class="text-white">{{ reviewer.name }}</p>
+						<p class="text-sm">{{ reviewer.textReview }}</p>
+					</div>
+				</div>
+				}
+			</div>
+			<div class="mt-2">
+				<div class="w-full rounded-lg bg-slate-50 opacity-15 relative px-4 py-3 flex gap-2">
+					<input type="text" class="bg-transparent w-full outline-none border-none text-black" />
+
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="icon icon-tabler w-8 h-8 cursor-pointer text-white"
+					>
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path
+							d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z"
+						/>
+						<path d="M6.5 12h14.5" />
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div
+		class="absolute right-0 w-[70%] bottom-[0px] px-10 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[500px] after:bg-gradient-to-t after:from-slate-900 after:to-transparent"
+	>
+		<swiper-container
+			slides-per-view="3"
+			space-between="80"
+			height="10"
+			centered-slides="true"
+			class="translate-y-[-50px]"
+			effect="coverflow"
+			[active-index]="activeSlide"
+			#swiper
+			(swiperreachend)="handleReachEnd()"
+		>
+			@for (m of movies; track $index) {
+			<swiper-slide class="cursor-pointer" lazy="true">
+				<div class="rounded-lg overflow-hidden select-none" (click)="handleSelectMovie(m.id)">
+					<img [src]="'https://image.tmdb.org/t/p/w500' + m.poster_path" alt="" loading="lazy" />
+				</div>
+			</swiper-slide>
+			}
+		</swiper-container>
+	</div>
+</div>
+}

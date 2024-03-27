@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SupabaseService } from './share/services/supabase/superbase.service';
 import { AccountComponent } from './share/components/account/account.component';
 import { ToastComponent } from '@share/components/toast/toast.component';
+import { register } from 'swiper/element/bundle';
+
 
 
 @Component({
@@ -12,15 +13,10 @@ import { ToastComponent } from '@share/components/toast/toast.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'voting-app';
   isAdmin = true;
-
-  session = this.supabase.session
-
-  constructor(private readonly supabase: SupabaseService) { }
-
-  ngOnInit() {
-    this.supabase.authChanges((_, session) => (this.session = session))
+  constructor() {
+    register()
   }
 }
