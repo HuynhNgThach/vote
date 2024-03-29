@@ -1,4 +1,4 @@
-import { Component, ContentChild, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { IMovie, IReviewer } from '@share/models/movie';
 import { MovieService } from '@share/services/movie/movie.service';
 import { SwiperContainer } from 'swiper/element';
@@ -12,6 +12,7 @@ import { SwiperOptions } from 'swiper/types';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TemplateComponent implements OnInit {
+  movieLoading = false
   selectedMovie!: IMovie
   reviewers: Array<IReviewer> = [
     {
@@ -72,20 +73,21 @@ export class TemplateComponent implements OnInit {
     window.requestAnimationFrame(() => {
 
       this.swiperRef.nativeElement.swiper.slideTo(this.activeSlide)
-      // this.swiperRef.nativeElement.swiper.on("reachEnd", () => {
-      //   this.handleReachEnd()
-      // })
+
     })
   }
   handleReachEnd() {
-    console.log("End")
     this.page++
     this.loadMovies(this.page)
+    console.log("end")
   }
   async loadMovies(page: number) {
+
+
     const newMovie = await this.movieService.getPopularMovies(page) ?? []
     this.movies = [...this.movies, ...newMovie]
     this.selectedMovie = this.selectedMovie ? this.selectedMovie : this.movies[0]
+
   }
 
 }

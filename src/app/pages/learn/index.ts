@@ -15,5 +15,10 @@ export const routes: Routes = [
     path: 'template',
     title: 'Template',
     loadComponent: async () => (await import('./template/template.component')).TemplateComponent
+  },
+  {
+    path: 'calendar',
+    title: 'Calendar',
+    loadComponent: async () => (await import('./calendar/calendar.component')).CalendarComponent
   }
 ]

@@ -1,0 +1,5 @@
+.calendar {
+  display: grid;
+  grid-template-columns: [header-start] 1fr [mon-start] 1fr [tue-start] 1fr [wed-start] 1fr [thur-start] 1fr [fr-start] 1fr [sat-start] 1fr [sun-start] 1fr;
+  grid-template-rows: [header-row-start] 1fr [hr-start] 1fr [hr1-start] 1fr [hr2-start] 1fr [hr3-start] 1fr [hr4-start] 1fr [hr5-start] 1fr [hr6-start] 1fr [hr7-start] 1fr [hr8-start] 1fr [hr9-start] 1fr[hr10-start] 1fr [hr11-start] 1fr [hr12-start] 1fr [hr13-start] 1fr [hr14-start] 1fr [hr15-start] 1fr [hr16-start] 1fr [hr17-start] 1fr [hr18-start] 1fr [hr19-start] 1fr [hr20-start] 1fr [hr21-start] 1fr [hr22-start] 1fr [hr23-start] 1fr;
+}

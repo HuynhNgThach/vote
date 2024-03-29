@@ -13,16 +13,37 @@
 			<div class="text-white text-6xl font-semibold mb-5">{{ selectedMovie.title }}</div>
 			<div>{{ shortTilte }}</div>
 		</div>
-		<div class="mt-5 text-right">
+		<div class="mt-5 flex gap-4 justify-end">
 			<button
-				class="w-1/2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-xl px-5 py-3 text-center transition"
+				class="w-1/2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-800 rounded-lg text-xl px-5 h-[50px] text-center transition"
 			>
 				Watch now
 			</button>
+			<div
+				class="w-[50px] h-[50px] border self-stretch flex items-center justify-center rounded-lg hover:opacity-75 transition cursor-pointer"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="icon icon-tabler icons-tabler-outline icon-tabler-heart text-white"
+				>
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+				</svg>
+			</div>
 		</div>
 		<div class="mt-5">
 			<div class="text-white text-2xl">Global Chat</div>
-			<div class="space-y-3 my-4">
+			<div
+				class="space-y-3 my-5 relative before:content-[''] before:absolute before:top-0 before:left-0 before:bg-black before:w-full before:h-[50px] before:opacity-50 before:blur-[5px]"
+			>
 				@for (reviewer of reviewers; track $index) {
 				<div class="flex gap-2">
 					<div class="w-[40px] h-[40px] rounded-full overflow-hidden">
@@ -39,9 +60,14 @@
 				</div>
 				}
 			</div>
-			<div class="mt-2">
-				<div class="w-full rounded-lg bg-slate-50 opacity-15 relative px-4 py-3 flex gap-2">
-					<input type="text" class="bg-transparent w-full outline-none border-none text-black" />
+			<div class="mt-5">
+				<div class="w-full relative flex gap-2 items-center">
+					<div class="flex-1 bg-slate-300 rounded-lg px-4">
+						<input
+							type="text"
+							class="bg-transparent w-full outline-none border-none text-black h-[50px]"
+						/>
+					</div>
 
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +79,7 @@
 						stroke-width="2"
 						stroke-linecap="round"
 						stroke-linejoin="round"
-						class="icon icon-tabler w-8 h-8 cursor-pointer text-white"
+						class="icon icon-tabler w-8 h-8 text-white opacity-100 cursor-pointer"
 					>
 						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 						<path
@@ -80,7 +106,7 @@
 			(swiperreachend)="handleReachEnd()"
 		>
 			@for (m of movies; track $index) {
-			<swiper-slide class="cursor-pointer" lazy="true">
+			<swiper-slide class="cursor-pointer" lazy="true" width="50">
 				<div class="rounded-lg overflow-hidden select-none" (click)="handleSelectMovie(m.id)">
 					<img [src]="'https://image.tmdb.org/t/p/w500' + m.poster_path" alt="" loading="lazy" />
 				</div>
