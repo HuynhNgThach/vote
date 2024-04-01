@@ -1,0 +1,1 @@
+export const TMDB_ORIGIN = 'https://api.themoviedb.org'

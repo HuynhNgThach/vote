@@ -7,8 +7,7 @@ import { AppComponent } from './app.component';
         ReactiveFormsModule,
         ToastComponent,
     ],
-    declarations: [AppComponent],
-    bootstrap: [AppComponent]
+
 
 })
 export class AppModule { }

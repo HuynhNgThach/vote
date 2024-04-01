@@ -1,11 +1,12 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { environment } from '@env/environment';
+import { TMDB_ORIGIN } from '@share/utils/constants';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
-  console.log("from api interceptor", req.url)
   const origin = new URL(req.url).origin
-  if (origin === 'https://api.themoviedb.org') {
+  if (origin === TMDB_ORIGIN) {
     const reqWithHeader = req.clone({
-      headers: req.headers.set('Authorization', 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjhhNmYyM2NmNGJjNzNkZjI4NWQ3ZDMxNWU1OTYwYSIsInN1YiI6IjY2MDM5ZDMyN2Y2YzhkMDE2MzcwZjcwOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nagu2XyLbjcxcCDMDKJ9zOWaQgEWhzlQWtkdM-Aqqhw'),
+      headers: req.headers.set('Authorization', `Bearer ${environment.tmdbApiKey}`),
     });
     return next(reqWithHeader)
   }
