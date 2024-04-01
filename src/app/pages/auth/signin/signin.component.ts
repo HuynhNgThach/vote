@@ -5,6 +5,8 @@ import { CardComponent } from '@share/components';
 import { Router } from '@angular/router';
 import { InputComponent } from '@share/components/input/input.component';
 import { CommonModule } from '@angular/common';
+import { LoggerService } from '@share/services/logger/logger.service';
+import { BetterLoggerService } from '@share/services/logger/betterLogger.service';
 
 
 @Component({
@@ -12,6 +14,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, CardComponent, InputComponent, CommonModule],
   templateUrl: './signin.component.html',
+  providers: [{ provide: LoggerService, useClass: BetterLoggerService }]
 })
 export class SigninComponent {
   loading = false
@@ -22,6 +25,7 @@ export class SigninComponent {
 
   session
 
+
   get email() {
     return this.signinForm.get('emailFormControl')
   }
@@ -31,7 +35,8 @@ export class SigninComponent {
 
   constructor(
     private supabase: SupabaseService,
-    private router: Router
+    private router: Router,
+    private logger: LoggerService
   ) {
     this.session = supabase.session
   }
@@ -46,7 +51,8 @@ export class SigninComponent {
       this.router.navigate(['/'])
     } catch (error) {
       if (error instanceof Error) {
-        console.log("handleSignin", error.message)
+        this.logger.warn("asdfasd")
+        // console.log("handleSignin", error.message)
       }
     } finally {
       this.loading = false
