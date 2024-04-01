@@ -1,14 +1,17 @@
 <div class="signin flex items-center justify-center h-full">
-	<div class="card border shadow-lg w-[600px] overflow-hidden">
-		@if (loading) {
-		<progress class="progress w-[100%]"></progress>
-		}
-		<div class="card-body gap-y-5">
-			<!-- <p appHighlight>dsfasfsad</p> -->
-			<div class="card-title justify-center mb-10 font-medium text-[30px] text-white">
-				{{ title }}
-			</div>
-			<ng-content></ng-content>
-		</div>
-	</div>
+  <div class="card border shadow-lg w-[600px] overflow-hidden">
+    @if (loading) {
+    <progress class="progress w-[100%]"></progress>
+    }
+    <div class="card-body gap-y-5">
+      <p appHighlight [color]="'#ff00ff'">Here is the attribute directive</p>
+      <p *appUnless="false">Here is the structural directive</p>
+      <div
+        class="card-title justify-center mb-10 font-medium text-[30px] text-white"
+      >
+        {{ title }}
+      </div>
+      <ng-content></ng-content>
+    </div>
+  </div>
 </div>
